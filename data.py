@@ -5,5 +5,4 @@ dictionary = {item.split(",")[0]: (item.split(",")[1], item.split(",")[2], item.
 with open("2003.csv", "r") as infile:
     data = infile.read().split("\n")
 data = [item.split(",") for item in data[1:]]
-print data[:10]
 
