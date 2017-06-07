@@ -43,11 +43,14 @@ for i in range(0, len(years)):
         data[i][j].append(1)
 
 matrix = []
-for elt in data:
+for elt in data[1:-1]:
     matrix.extend(elt)
 matrix = np.array(matrix)
 perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
 matrix = matrix[:,perm]
+
+data2003 = np.array(data[0])
+data2016 = np.array(data[-1])
 
 # TODO: drop the name column from years 2003 - 2010 so everything can be indexed the same
 # TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
