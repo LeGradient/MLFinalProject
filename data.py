@@ -31,10 +31,23 @@ for i in range(0, len(years)):
         data.append(infile.read().split("\n"))
     data[i] = [item.split(",") for item in data[i][:-1]]
     for j in range(0, len(data[i])):
+        data[i][j][0] = int(data[i][j][0][1:5])
         data[i][j][1] = region_index(regions, data[i][j][1])
         data[i][j][2] = ownership_index(data[i][j][2])
         data[i][j][3] = gender_index(data[i][j][3])
+        data[i][j][4] = float(data[i][j][4][1:7])
+        data[i][j][5] = float(data[i][j][5][1:7])
+        data[i][j][6] = float(data[i][j][6][1:7])
+        data[i][j][7] = float(data[i][j][7][1:7])
+        data[i][j][8] = float(data[i][j][8][1:7])
+        data[i][j].append(1)
 
+matrix = []
+for elt in data:
+    matrix.extend(elt)
+matrix = np.array(matrix)
+perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
+matrix = matrix[:,perm]
 
 # TODO: drop the name column from years 2003 - 2010 so everything can be indexed the same
 # TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
@@ -42,4 +55,4 @@ for i in range(0, len(years)):
 # TODO: find average pass rate per region per year
 #           format as [[year, ownership, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
 
-print "sup"
+print matrix[0]
