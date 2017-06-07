@@ -54,5 +54,3 @@ matrix = matrix[:,perm]
 # TODO: create mapping of region id to list index for one-hot
 # TODO: find average pass rate per region per year
 #           format as [[year, ownership, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
-
-print matrix[0]
