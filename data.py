@@ -10,6 +10,9 @@ def ownership_index(ownership):
 def gender_index(gender):
     return int(gender == '"F"')
 
+def one_hot_regions(region_id):
+    return list(map(int, "{0:031b}".format(2**int(region_id))))
+
 
 # generate filenames for 2003.csv - 2016.csv
 years = ["ml{}.csv".format(i) for i in range(2003, 2016 + 1)]
@@ -32,7 +35,7 @@ for i in range(0, len(years)):
     data[i] = [item.split(",") for item in data[i][:-1]]
     for j in range(0, len(data[i])):
         data[i][j][0] = int(data[i][j][0][1:5])
-        data[i][j][1] = region_index(regions, data[i][j][1])
+        data[i][j][1] = one_hot_regions(region_index(regions, data[i][j][1]))
         data[i][j][2] = ownership_index(data[i][j][2])
         data[i][j][3] = gender_index(data[i][j][3])
         data[i][j][4] = float(data[i][j][4][1:7])
@@ -41,19 +44,28 @@ for i in range(0, len(years)):
         data[i][j][7] = float(data[i][j][7][1:7])
         data[i][j][8] = float(data[i][j][8][1:7])
         data[i][j].append(1)
+        # TODO: unfuck this entire mess
+        temp = [data[i][j][0]]
+        temp.extend(data[i][j][2:4])
+        temp.append(data[i][j][9])
+        temp.extend(data[i][j][1])
+        temp.extend(data[i][j][4:9])
+        data[i][j] = temp
 
 matrix = []
 for elt in data[1:-1]:
     matrix.extend(elt)
 matrix = np.array(matrix)
-perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
-matrix = matrix[:,perm]
+# perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
+# matrix = matrix[:,perm]
 
 data2003 = np.array(data[0])
 data2016 = np.array(data[-1])
+
+print data2016[0]
 
 # TODO: drop the name column from years 2003 - 2010 so everything can be indexed the same
 # TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
 # TODO: create mapping of region id to list index for one-hot
 # TODO: find average pass rate per region per year
-#           format as [[year, ownership, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
+#           format as [[year, ownership, gender, 1, isRegion0, isRegion1, ..., isRegion_k, passrate, d1rate, ..., d4rate], ...]
