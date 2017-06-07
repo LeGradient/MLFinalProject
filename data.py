@@ -20,3 +20,5 @@ for i in range(0, len(years)):
 #           format as [[year, ownership, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
 
 print "sup"
+
+
