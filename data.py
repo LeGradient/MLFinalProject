@@ -17,4 +17,6 @@ for i in range(0, len(years)):
 # TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
 # TODO: create mapping of region id to list index for one-hot
 # TODO: find average pass rate per region per year
-#           format as [[year, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
+#           format as [[year, ownership, isRegion0, isRegion1, ..., isRegion_k, pass rate], ...]
+
+print "sup"
