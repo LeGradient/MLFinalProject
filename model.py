@@ -22,15 +22,15 @@ class Data:
 
     def evaluate(self, year, ownership, gender, region):
         #x_new = [year, gender] + list(map(int, "{0:031b}".format(2**i))) + [1, 0, 0, 0, 0]
-        print one_hot_regions(region)
+        #print one_hot_regions(region)
         #x_news = [[year, ownership, gender, 1]+one_hot_regions(region) + list(map(int,"{0:05b}".format(2**(4-i)))) for i in range(5)]
         x_new = [year, ownership, gender, 1]+one_hot_regions(region)
 
-        print np.array(x_new[0]).dot(np.array(self.w)[:,0])        
+        return np.array(x_new).dot(self.w[0])        
 
 def calculate_weights(x, y, l):
-    return np.dot(np.linalg.inv(np.dot(x.T,x) + l*np.identity(len(x[0]))), x.T.dot(y)) 
-    #return np.dot( np.linalg.inv(x.T.dot(x))  ,x.T.dot(y))
+    #return np.dot(np.linalg.inv(np.dot(x.T,x) + l*np.identity(len(x[0]))), x.T.dot(y)) 
+    return np.dot( np.linalg.inv(x.T.dot(x)+np.eye(x.shape[1])*0.0000001)  ,x.T.dot(y))
     
 def one_hot_regions(region_id):
     return list(map(int, "{0:031b}".format(2**int(region_id))))
@@ -38,8 +38,12 @@ def one_hot_regions(region_id):
 
 
 stuff = Data(data.matrix)
-print stuff.x.shape, stuff.y[:,0].shape
-print calculate_weights(stuff.x, stuff.y[:,0], 0)
+#print stuff.x.shape, stuff.y[:,0].shape
+#print calculate_weights(stuff.x, stuff.y[:,0], 0)
 stuff.cfs_train(0)
-#print stuff.w[0]
-stuff.evaluate(2016, 1, 1, 13)
+print stuff.w[0]
+print stuff.w[1]
+print stuff.w[2]
+print stuff.w[3]
+print stuff.w[4]
+print stuff.evaluate(2011, 0, 1, 0)
