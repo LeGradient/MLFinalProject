@@ -62,8 +62,6 @@ matrix = np.array(matrix)
 data2003 = np.array(data[0])
 data2016 = np.array(data[-1])
 
-print data2016[0]
-
 # TODO: drop the name column from years 2003 - 2010 so everything can be indexed the same
 # TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
 # TODO: create mapping of region id to list index for one-hot
