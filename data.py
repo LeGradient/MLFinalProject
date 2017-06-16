@@ -54,13 +54,23 @@ for i in range(0, len(years)):
         data[i][j] = temp
 
 matrix = []
-for elt in data[1:-1]:
-    # skip year 2012 because it is an outlier
-    if data.index(elt) == 9:
-        continue
-    matrix.extend(elt)
+matrix_test = []
+for elt in data[:9]:
+    # # skip year 2012 because it is an outlier
+    # if data.index(elt) == 9:
+    #     continue
+    l = int(len(elt) * .8)
+    matrix.extend(elt[0 : l])
+    matrix_test.extend(elt[l : ])
 matrix = np.array(matrix)
 matrix[:,0] = stats.zscore(matrix[:,0])
+
+matrix2 = []
+matrix2_test = []
+for elt in data[10:]:
+    l = int(len(elt) * .8)
+    matrix2.extend(elt[0 : l])
+    matrix2_test.extend(elt[l : ])
 # perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
 # matrix = matrix[:,perm]
 
