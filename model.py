@@ -13,8 +13,8 @@ class Data:
 
     def separate_matrix(self, matrix):
         x = matrix[:, :-5]
-        #print x.shape
-        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:33].T, axis=1) # Year
+        # Year Feature Multiplication
+        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:33].T, axis=1)
         #
         # Hadamard product:
         #
@@ -22,8 +22,11 @@ class Data:
         # a2   b21 b22   = a2b21 a2b22
         # a3   b31 b32     a3b31 a3b32
         #
-        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:33].T, axis=1) #Ownership
-        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:33].T, axis=1) #Gender
+        # Ownership Feature Multiplication
+        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:33].T, axis=1)
+
+        # Gender Feature Multiplication
+        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:33].T, axis=1)
         y = matrix[:, -5:]
         return x_new, y
 
@@ -88,4 +91,7 @@ print "\tTraining RMSE", [math.sqrt(lateset_mse[i]) for i in range(5)]
 # print "Test MSE: ", lateset_test_mse
 print "\tTest RMSE: ", [math.sqrt(lateset_test_mse[i]) for i in range(5)]
 
-#print lateset.w[0]
+
+print "Evalutation Battery: "
+# set.evaluate(z-score year, ownership, gender, region id)
+print earlyset.evaluate((2009-data.year_mean)/data.year_var, 0, 1, 0)
