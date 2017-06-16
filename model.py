@@ -57,11 +57,20 @@ def one_hot_regions(region_id):
     return list(map(int, "{0:031b}".format(2**int(region_id))))
 
 
-stuff = Data(data.matrix)
+earlyset = Data(data.matrix)
 # print stuff.x.shape, stuff.y[:,0].shape
 # print calculate_weights(stuff.x, stuff.y[:,0], 0)
-stuff.cfs_train()
-print "Test Data Point:", stuff.evaluate(2011, 0, 1, 0)
-mse = stuff.mse()
-print "MSE: ", mse
-print "RMSE: ", [math.sqrt(mse[i]) for i in range(5)]
+earlyset.cfs_train()
+#print "Test Data Point:", earlyset.evaluate(2011, 0, 1, 0)
+earlyset_mse = earlyset.mse()
+print "2003-2011:"
+print "MSE: ", earlyset_mse
+print "RMSE: ", [math.sqrt(earlyset_mse[i]) for i in range(5)]
+
+print data.matrix.shape
+lateset = Data(data.matrix2)
+lateset.cfs_train()
+lateset_mse = lateset.mse()
+print "2013-2016:"
+print "MSE:", lateset_mse
+print "RMSE", [math.sqrt(lateset_mse[i]) for i in range(5)]
