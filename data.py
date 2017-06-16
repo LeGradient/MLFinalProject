@@ -54,7 +54,7 @@ for i in range(0, len(years)):
         data[i][j] = temp
 
 matrix = []
-for elt in data[1:-1]:
+for elt in data[1:]:
     # skip year 2012 because it is an outlier
     if data.index(elt) == 9:
         continue
