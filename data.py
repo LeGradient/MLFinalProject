@@ -59,7 +59,7 @@ for i in range(0, len(years)):
 
 matrix = []
 matrix_test = []
-for elt in data[:9]:
+for elt in data[:10]:
     # shuffle data points so we sample evenly from each region
     random.shuffle(elt)
     # split training/test data 80/20
