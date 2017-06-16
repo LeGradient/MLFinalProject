@@ -21,7 +21,7 @@ class Data:
         self.w = [calculate_weights(self.x, self.y[:, i], l) for i in range(5)]
 
     def evaluate(self, year, ownership, gender, region):
-        x_new = [year, ownership, gender, 1]+one_hot_regions(region)
+        x_new = [year-2003, ownership, gender, 1]+one_hot_regions(region)
         return [np.array(x_new).dot(self.w[i]) for i in range(5)]
 
     def eval(self):
@@ -51,5 +51,6 @@ print stuff.w[2]
 print stuff.w[3]
 print stuff.w[4]
 print "Test Data Point:", stuff.evaluate(2011, 0, 1, 0)
-print "MSE: ", stuff.mse()
-print "RMSE: ", [math.sqrt(stuff.mse()[i]) for i in range(5)]
+mse = stuff.mse()
+print "MSE: ", mse
+print "RMSE: ", [math.sqrt(mse[i]) for i in range(5)]
