@@ -13,6 +13,11 @@ class Data:
 
     def separate_matrix(self, matrix):
         x = matrix[:, :-5]
+        print x.shape
+        x = np.insert(x, 1, x[:, 0]**2, axis=1)
+        print x.shape
+        print x
+        # print x[:,0]
         y = matrix[:, -5:]
         return x, y
 
@@ -21,8 +26,8 @@ class Data:
         self.w = [calculate_weights(self.x, self.y[:, i], l) for i in range(5)]
 
     def evaluate(self, year, ownership, gender, region):
-        x_new = [year-2003, ownership, gender, 1]+one_hot_regions(region)
-        return [np.array(x_new).dot(self.w[i]) for i in range(5)]
+        x_n = [year, year, ownership, gender, 1]+one_hot_regions(region)
+        return [np.array(x_n).dot(self.w[i]) for i in range(5)]
 
     def eval(self):
         return [np.inner(self.w[i], self.x) for i in range(5)]
@@ -46,10 +51,10 @@ stuff = Data(data.matrix)
 # print calculate_weights(stuff.x, stuff.y[:,0], 0)
 stuff.cfs_train()
 print stuff.w[0]
-print stuff.w[1]
-print stuff.w[2]
-print stuff.w[3]
-print stuff.w[4]
+#print stuff.w[1]
+#print stuff.w[2]
+#print stuff.w[3]
+#print stuff.w[4]
 print "Test Data Point:", stuff.evaluate(2011, 0, 1, 0)
 mse = stuff.mse()
 print "MSE: ", mse
