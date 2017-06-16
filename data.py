@@ -63,7 +63,9 @@ for elt in data[:9]:
     matrix.extend(elt[0 : l])
     matrix_test.extend(elt[l : ])
 matrix = np.array(matrix)
+matrix_test = np.array(matrix_test)
 matrix[:,0] = stats.zscore(matrix[:,0])
+matrix_test[:,0] = stats.zscore(matrix_test[:,0])
 
 matrix2 = []
 matrix2_test = []
@@ -71,8 +73,10 @@ for elt in data[10:]:
     l = int(len(elt) * .8)
     matrix2.extend(elt[0 : l])
     matrix2_test.extend(elt[l : ])
-# perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
-# matrix = matrix[:,perm]
+matrix2 = np.array(matrix2)
+matrix2_test = np.array(matrix2_test)
+matrix2[:,0] = stats.zscore(matrix2[:,0])
+matrix2_test[:,0] = stats.zscore(matrix2_test[:,0])
 
 data2003 = np.array(data[0])
 data2016 = np.array(data[-1])
