@@ -1,3 +1,4 @@
+import random
 import numpy as np
 from scipy import stats
 
@@ -56,25 +57,30 @@ for i in range(0, len(years)):
 matrix = []
 matrix_test = []
 for elt in data[:9]:
-    # # skip year 2012 because it is an outlier
-    # if data.index(elt) == 9:
-    #     continue
+    # shuffle data points so we sample evenly from each region
+    random.shuffle(elt)
+    # split training/test data 80/20
     l = int(len(elt) * .8)
     matrix.extend(elt[0 : l])
     matrix_test.extend(elt[l : ])
 matrix = np.array(matrix)
 matrix_test = np.array(matrix_test)
+# normalize the year column
 matrix[:,0] = stats.zscore(matrix[:,0])
 matrix_test[:,0] = stats.zscore(matrix_test[:,0])
 
 matrix2 = []
 matrix2_test = []
 for elt in data[10:]:
+    # shuffle data points so we sample evenly from each region
+    random.shuffle(elt)
+    # split training/test data 80/20
     l = int(len(elt) * .8)
     matrix2.extend(elt[0 : l])
     matrix2_test.extend(elt[l : ])
 matrix2 = np.array(matrix2)
 matrix2_test = np.array(matrix2_test)
+# normalize the year column
 matrix2[:,0] = stats.zscore(matrix2[:,0])
 matrix2_test[:,0] = stats.zscore(matrix2_test[:,0])
 
