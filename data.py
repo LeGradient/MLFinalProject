@@ -67,8 +67,11 @@ for elt in data[:9]:
 matrix = np.array(matrix)
 matrix_test = np.array(matrix_test)
 # normalize the year column
+year_mean = np.mean(matrix[:,0])
+year_var = np.var(matrix[:,0])
 matrix[:,0] = stats.zscore(matrix[:,0])
 matrix_test[:,0] = stats.zscore(matrix_test[:,0])
+
 
 matrix2 = []
 matrix2_test = []
@@ -82,14 +85,10 @@ for elt in data[10:]:
 matrix2 = np.array(matrix2)
 matrix2_test = np.array(matrix2_test)
 # normalize the year column
+year2_mean = np.mean(matrix2[:,0])
+year2_var = np.var(matrix2[:,0])
 matrix2[:,0] = stats.zscore(matrix2[:,0])
 matrix2_test[:,0] = stats.zscore(matrix2_test[:,0])
 
 data2003 = np.array(data[0])
 data2016 = np.array(data[-1])
-
-# TODO: drop the name column from years 2003 - 2010 so everything can be indexed the same
-# TODO: drop last (empty) column from years 2003 - 2009, 2011, 2016
-# TODO: create mapping of region id to list index for one-hot
-# TODO: find average pass rate per region per year
-#           format as [[year, ownership, gender, 1, isRegion0, isRegion1, ..., isRegion_k, passrate, d1rate, ..., d4rate], ...]
