@@ -55,6 +55,9 @@ for i in range(0, len(years)):
 
 matrix = []
 for elt in data[1:-1]:
+    # skip year 2012 because it is an outlier
+    if data.index(elt) == 9:
+        continue
     matrix.extend(elt)
 matrix = np.array(matrix)
 matrix[:,0] = stats.zscore(matrix[:,0])
