@@ -61,11 +61,6 @@ stuff = Data(data.matrix)
 # print stuff.x.shape, stuff.y[:,0].shape
 # print calculate_weights(stuff.x, stuff.y[:,0], 0)
 stuff.cfs_train()
-print stuff.w[0]
-#print stuff.w[1]
-#print stuff.w[2]
-#print stuff.w[3]
-#print stuff.w[4]
 print "Test Data Point:", stuff.evaluate(2011, 0, 1, 0)
 mse = stuff.mse()
 print "MSE: ", mse
