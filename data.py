@@ -49,9 +49,10 @@ for i in range(0, len(years)):
         # TODO: unfuck this entire mess
         temp = [data[i][j][0]]
         temp.extend(data[i][j][2:4])
-        temp.append(data[i][j][9])
+        #temp.append(data[i][j][9])
         temp.extend(data[i][j][1])
         temp.extend(data[i][j][4:9])
+        temp.append(data[i][j][9])
         data[i][j] = temp
 
 matrix = []

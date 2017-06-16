@@ -3,7 +3,7 @@ import math
 import data
 '''
 format as:
-[[year, ownership, gender, 1, region0, ..., region_k, r, d1r, ..., d4r], ...]
+[[year, ownership, gender, region0, ..., region_k, r, d1r, ..., d4r, 1], ...]
 '''
 
 
@@ -13,8 +13,8 @@ class Data:
 
     def separate_matrix(self, matrix):
         x = matrix[:, :-5]
-        print x.shape
-        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:34].T, axis=1)
+        #print x.shape
+        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:33].T, axis=1) # Year
         #
         # Hadamard product:
         #
@@ -22,8 +22,8 @@ class Data:
         # a2   b21 b22   = a2b21 a2b22
         # a3   b31 b32     a3b31 a3b32
         #
-        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:34].T, axis=1)
-        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:34].T, axis=1)
+        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:33].T, axis=1) #Ownership
+        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:33].T, axis=1) #Gender
         y = matrix[:, -5:]
         return x_new, y
 
@@ -34,19 +34,21 @@ class Data:
     def evaluate(self, year, ownership, gender, region):
         x = np.array([year, ownership, gender, 1]+one_hot_regions(region))
         # print x.shape
-        x_new = np.insert(x, 0, x[0]*x[0:34])
-        x_new = np.insert(x_new, 0, x[1]*x[1:34])
-        x_new = np.insert(x_new, 0, x[2]*x[2:34])
+        x_new = np.insert(x, 0, x[0]*x[0:33])
+        x_new = np.insert(x_new, 0, x[1]*x[1:33])
+        x_new = np.insert(x_new, 0, x[2]*x[2:33])
         print x_new.shape
         return [np.array(x_new).dot(self.w[i]) for i in range(5)]
 
-    def eval(self):
-        return [np.inner(self.w[i], self.x) for i in range(5)]
+    def eval(self, data=None):
+        if data is None:
+            data = self
+        return [np.inner(self.w[i], data.x) for i in range(5)]
 
     def mse(self, data=None):
         if data is None:
             data = self
-        return [np.mean((data.y[:, i] - self.eval()[i])**2) for i in range(5)]
+        return [np.mean((data.y[:, i] - self.eval(data)[i])**2) for i in range(5)]
 
 
 def calculate_weights(x, y, l):
@@ -58,19 +60,32 @@ def one_hot_regions(region_id):
 
 
 earlyset = Data(data.matrix)
+
+earlyset_test = Data(data.matrix_test)
 # print stuff.x.shape, stuff.y[:,0].shape
 # print calculate_weights(stuff.x, stuff.y[:,0], 0)
 earlyset.cfs_train()
-#print "Test Data Point:", earlyset.evaluate(2011, 0, 1, 0)
-earlyset_mse = earlyset.mse()
-print "2003-2011:"
-print "MSE: ", earlyset_mse
-print "RMSE: ", [math.sqrt(earlyset_mse[i]) for i in range(5)]
 
-print data.matrix.shape
+
+# print "Test Data Point:", earlyset.evaluate(2011, 0, 1, 0)
+earlyset_mse = earlyset.mse()
+earlyset_test_mse = earlyset.mse(earlyset_test)
+print "2003-2011:"
+# print "Training MSE: ", earlyset_mse
+print "\tTraining RMSE: ", [math.sqrt(earlyset_mse[i]) for i in range(5)]
+# print "Test MSE: ", earlyset_test_mse
+print "\tTest RMSE: ", [math.sqrt(earlyset_test_mse[i]) for i in range(5)]
+
+
 lateset = Data(data.matrix2)
+lateset_test = Data(data.matrix2_test)
 lateset.cfs_train()
 lateset_mse = lateset.mse()
+lateset_test_mse = lateset.mse(lateset_test)
 print "2013-2016:"
-print "MSE:", lateset_mse
-print "RMSE", [math.sqrt(lateset_mse[i]) for i in range(5)]
+# print "MSE:", lateset_mse
+print "\tTraining RMSE", [math.sqrt(lateset_mse[i]) for i in range(5)]
+# print "Test MSE: ", lateset_test_mse
+print "\tTest RMSE: ", [math.sqrt(lateset_test_mse[i]) for i in range(5)]
+
+#print lateset.w[0]
