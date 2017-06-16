@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import stats
 
 # map region key to integer
 def region_index(regions, region):
@@ -56,6 +57,7 @@ matrix = []
 for elt in data[1:-1]:
     matrix.extend(elt)
 matrix = np.array(matrix)
+matrix[:,0] = stats.zscore(matrix[:,0])
 # perm = np.argsort([0,4,1,2,5,6,7,8,9,3])
 # matrix = matrix[:,perm]
 
