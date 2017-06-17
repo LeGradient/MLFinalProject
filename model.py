@@ -14,9 +14,11 @@ class Data:
     def separate_matrix(self, matrix):
         x = matrix[:, :-5]
         # Year Feature Multiplication
-        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:33].T, axis=1)
+        print x.shape
+        x_new = np.insert(x, 0, x[:, 0]*x[:, 0:34].T, axis=1)
+        print x_new.shape
         # Year Sqaured Feature Multiplication
-        x_new = np.insert(x_new, 0, (x[:, 0]**2)*x[:, 1:33].T, axis=1)
+        x_new = np.insert(x_new, 0, (x[:, 0]**2)*x[:, 1:34].T, axis=1)
         #
         # Hadamard product:
         #
@@ -25,10 +27,10 @@ class Data:
         # a3   b31 b32     a3b31 a3b32
         #
         # Ownership Feature Multiplication
-        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:33].T, axis=1)
+        x_new = np.insert(x_new, 0, x[:, 1]*x[:, 1:34].T, axis=1)
 
         # Gender Feature Multiplication
-        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:33].T, axis=1)
+        x_new = np.insert(x_new, 0, x[:, 2]*x[:, 2:34].T, axis=1)
         y = matrix[:, -5:]
         return x_new, y
 
@@ -39,10 +41,10 @@ class Data:
     def evaluate(self, year, ownership, gender, region):
         x = np.array([year, ownership, gender, 1]+one_hot_regions(region))
         # print x.shape
-        x_new = np.insert(x, 0, x[0]*x[0:33])
-        x_new = np.insert(x_new, 0, (x[0]**2)*x[1:33])
-        x_new = np.insert(x_new, 0, x[1]*x[1:33])
-        x_new = np.insert(x_new, 0, x[2]*x[2:33])
+        x_new = np.insert(x, 0, x[0]*x[0:34])
+        x_new = np.insert(x_new, 0, (x[0]**2)*x[1:34])
+        x_new = np.insert(x_new, 0, x[1]*x[1:34])
+        x_new = np.insert(x_new, 0, x[2]*x[2:34])
         #print x_new.shape
         return [np.array(x_new).dot(self.w[i]) for i in range(5)]
 
