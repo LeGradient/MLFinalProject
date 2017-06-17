@@ -15,6 +15,8 @@ class Data:
         x = matrix[:, :-5]
         # Year Feature Multiplication
         x_new = np.insert(x, 0, x[:, 0]*x[:, 0:33].T, axis=1)
+        # Year Sqaured Feature Multiplication
+        x_new = np.insert(x_new, 0, (x[:, 0]**2)*x[:, 1:33].T, axis=1)
         #
         # Hadamard product:
         #
@@ -38,9 +40,10 @@ class Data:
         x = np.array([year, ownership, gender, 1]+one_hot_regions(region))
         # print x.shape
         x_new = np.insert(x, 0, x[0]*x[0:33])
+        x_new = np.insert(x_new, 0, (x[0]**2)*x[1:33])
         x_new = np.insert(x_new, 0, x[1]*x[1:33])
         x_new = np.insert(x_new, 0, x[2]*x[2:33])
-        print x_new.shape
+        #print x_new.shape
         return [np.array(x_new).dot(self.w[i]) for i in range(5)]
 
     def eval(self, data=None):
@@ -94,4 +97,4 @@ print "\tTest RMSE: ", [math.sqrt(lateset_test_mse[i]) for i in range(5)]
 
 print "Evalutation Battery: "
 # set.evaluate(z-score year, ownership, gender, region id)
-print earlyset.evaluate((2009-data.year_mean)/data.year_var, 0, 1, 0)
+print earlyset.evaluate((2006-data.year_mean)/data.year_var, 0, 1, 0)
