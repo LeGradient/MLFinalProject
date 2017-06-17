@@ -45,8 +45,8 @@ for i in range(0, len(years)):
         data[i][j][6] = float(data[i][j][6][1:7])
         data[i][j][7] = float(data[i][j][7][1:7])
         data[i][j][8] = float(data[i][j][8][1:7])
+        # reorder columns
         data[i][j].append(1)
-        # TODO: unfuck this entire mess
         temp = [data[i][j][0]]
         temp.extend(data[i][j][2:4])
         #temp.append(data[i][j][9])
